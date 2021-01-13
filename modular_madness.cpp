@@ -7,7 +7,7 @@ void interactive_command();
 
 int main()
 {
-    interactive_command(); // Calls interactive_command() with a infinte loop that exits when the given commad is exit.
+    interactive_command(); // Calls interactive_command() with an infinte loop that exits when the given commad is exit.
     return 0;
 }
 
