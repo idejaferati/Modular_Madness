@@ -1,5 +1,8 @@
 #include <iostream>
 #include <string> // Working with strings
+#include <vector>
+#include <sstream>
+#include <iterator>
 
 using namespace std; //Namespace std so that std::cout is just cout.
 
@@ -8,21 +11,22 @@ void interactive_command();
 int main()
 {
     interactive_command(); // Calls interactive_command() with an infinte loop that exits when the given commad is exit.
-    return 0;
-}
+    
+    const string delimiter = " ";
 
+}
 
 void interactive_command()
 {
     string command;
 
-    do {        
+    do
+    {
         cin >> command;
 
         if (command == "echo")
         {
             //TODO
-
 
             // cout << "echo" << endl; // Prints echo when called, used in early testing
         }
@@ -30,34 +34,29 @@ void interactive_command()
         {
             //TODO
 
-
-
-            // cout << "process"<<endl; 
+            // cout << "process"<<endl;
         }
         else if (command == "reverse")
         {
             //TODO
 
-
-            
-            // cout << "reverse"<<endl; 
+            // cout << "reverse"<<endl;
         }
         else if (command == "delay")
         {
             //TODO
 
-
-            
-            // cout << "delay"<<endl; 
+            // cout << "delay"<<endl;
         }
         else if (command == "noop")
         {
             //TODO
 
-
-            
-            // cout << "noop"<<endl; 
+            // cout << "noop"<<endl;
         }
 
     } while (command != "exit");
 }
+
+
+//https://stackoverflow.com/questions/3955601/how-do-i-split-a-string-at-an-arbitrary-index
