@@ -46,6 +46,10 @@ void interactive_command()
             {
                 noop();
             }
+            else
+            {
+                break;
+            }
             
             
 
@@ -85,5 +89,5 @@ string noop()
 }
 
 
-
-//https://stackoverflow.com/questions/3955601/how-do-i-split-a-string-at-an-arbitrary-index
+//This comes in handy when using reverse() because everycharacter needs to be indexed to an array and then called in reverse.
+//https://stackoverflow.com/questions/3955601/how-do-i-split-a-string-at-an-arbitrary-index 
