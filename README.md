@@ -13,3 +13,4 @@ use of module:
 2. Connection command, connects the output of one module to the input of another module ( similar to pipe function in bash)
 use of connection:
 	connect \<name_of_the_module1\> \<name_of_the_module2\>
+3. Process command, feeds input into the first module in the network process <...list of strings to be processed>
