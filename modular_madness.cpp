@@ -64,7 +64,7 @@ void interactive_command()
     } while (command != "exit");
 }
 
-string echo()
+string echo(string)
 {
 
 }
