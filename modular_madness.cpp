@@ -18,45 +18,72 @@ int main()
 
 void interactive_command()
 {
-    string command;
+    string command, argument1, argument2, argument3, argument4; // command expects an input like module, connect, process and exit, argumets1-4 expect strings and names or modules.
 
     do
     {
-        cin >> command;
+        cin >>command>>argument1>>argument2;//>>argument3>>argument4; //NEEDED a way to figure reading input till 'ENTER' is pressed
+        
 
-        if (command == "echo")
+        if (command == "module") // module <name> <operation>
         {
-            //TODO
+            string nameOfModule = argument1; //NEEDED a way to preserve previus entered modules in the network.
+            string nameOfOperation = argument2; //one of these : "echo", "reverse", "delay", "noop".
 
-            // cout << "echo" << endl; // Prints echo when called, used in early testing
+            if(nameOfOperation == "echo")
+            {
+                echo();
+            }
+            else if (nameOfOperation == "reverse")
+            {
+                reverse();
+            }
+            else if (nameOfOperation == "delay")
+            {
+                delay();
+            }
+            else if (nameOfOperation == "noop")
+            {
+                noop();
+            }
+            
+            
+
         }
-        else if (command == "process")
+        else if (command == "connect")
         {
             //TODO
 
-            // cout << "process"<<endl;
         }
-        else if (command == "reverse")
+        else if (command == "process") // processes commands with given strings.
         {
             //TODO
 
-            // cout << "reverse"<<endl;
-        }
-        else if (command == "delay")
-        {
-            //TODO
-
-            // cout << "delay"<<endl;
-        }
-        else if (command == "noop")
-        {
-            //TODO
-
-            // cout << "noop"<<endl;
         }
 
     } while (command != "exit");
 }
+
+string echo()
+{
+
+}
+
+string reverse()
+{
+
+
+}
+
+string delay()
+{
+
+}
+string noop()
+{
+
+}
+
 
 
 //https://stackoverflow.com/questions/3955601/how-do-i-split-a-string-at-an-arbitrary-index
