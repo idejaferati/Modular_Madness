@@ -14,3 +14,4 @@ use of module:
 use of connection:
 	connect \<name_of_the_module1\> \<name_of_the_module2\>
 3. Process command, feeds input into the first module in the network process <...list of strings to be processed>
+
