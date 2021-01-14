@@ -23,35 +23,32 @@ void interactive_command()
     {
         cin >> command;
 
-        if (command == "echo")
-        {
-            //TODO
+        switch (command) {
+        case "echo":
+            //TODO 
 
             // cout << "echo" << endl; // Prints echo when called, used in early testing
-        }
-        else if (command == "process")
-        {
+            break;
+        case "process":
             //TODO
 
             // cout << "process"<<endl;
-        }
-        else if (command == "reverse")
-        {
+            break;
+        case "reverse":
             //TODO
 
             // cout << "reverse"<<endl;
-        }
-        else if (command == "delay")
-        {
+            break;
+        case "delay":
             //TODO
 
             // cout << "delay"<<endl;
-        }
-        else if (command == "noop")
-        {
+            break;
+        case "noop":
             //TODO
 
             // cout << "noop"<<endl;
+            break;
         }
 
     } while (command != "exit");
