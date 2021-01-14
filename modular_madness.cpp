@@ -13,7 +13,6 @@ int main()
     interactive_command(); // Calls interactive_command() with an infinte loop that exits when the given commad is exit.
     
     const string delimiter = " ";
-
 }
 
 void interactive_command()
