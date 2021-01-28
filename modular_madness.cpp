@@ -12,6 +12,8 @@ vector<pair<string, string>> modules;
 vector<string> words;
 vector<pair<string, string>> processedStrings;
 
+int connections[100][100];
+
 string echo(string word)
 {
     return word+word;
@@ -28,7 +30,7 @@ string reverse(string word)
         last = last - 1;
     }
     
-    return reverse_word;
+    return "\n"+ reverse_word;
 }
 
 string delay(vector<string> words)
@@ -46,104 +48,107 @@ void createModule(string name, string operation) {
 
     module.first = name;
     module.second = operation;
-    if (modules.empty()) {
-        modules.push_back(module);
-    }
-    else {
-        modules.clear();
-        modules.push_back(module);
-    }
+    modules.push_back(module);
 }
 
-static void moduleCommandRun() {
-    string nameOfModule;
-    cin >> nameOfModule;
+string SplitUserInput(int n, string wholeCommand) {
+    string argument;
+    size_t pos1 = 0, pos2 = 1;
 
-    string operation;
-    cin >> operation;
+    while (n >= 0) { // positive indexing only
+        if (pos2 >= wholeCommand.length())
+            return string();
+        pos2 = wholeCommand.find(" ", pos1); //finds the first argument
+        argument = wholeCommand.substr(pos1, pos2 - pos1); //gets the argument splitted by space as a delimiter
+        pos1 = pos2 + 1;
+        n--;
+    }
 
-    createModule(nameOfModule, operation);
+    return argument;
 }
-
 
 void connectModules(string first_module, string second_module) {
-    string firstWord;
-    string secondWord;
-
-    for (pair<string, string> module : processedStrings) {
-        firstWord = module.second;
-        secondWord = module.first;
+    int intA = -1; //index of module with name a in modules array
+    int intB = -1; //index of module with name b in modules array
+    //finding a and b in the modules
+    for (int i = 0; i <= modules.size(); i++) {
+        if (first_module.compare(modules[i].first) == 0)
+            intA = i;
+        if (second_module.compare(modules[i].first) == 0)
+            intB = i;
+        if (intA != -1 && intB != -1)
+            break;
     }
-
-    if (module.first == first_module) {
-        cout << firstWord + secondWord;
+    //second index for connections
+    int c = 0;
+    while (connections[intA][c] != -1 && c < 100) {
+        c++;
     }
-    else {
-        cout << secondWord + firstWord;
-    }
+    connections[intA][c] = intB;
+}
+void processArgument(string argument) // processes argument 
+{
+    // TODO process argument
 }
 
-void connectCommandRun() {
-    string first_module;
-    cin >> first_module;
+// If modules are not empty then continue to process strings
+//bool modulesNotEmpty() {
+//    for (int i = 0; i < modules.size(); i++) {
+//        if (!modules[i].words.empty())
+//            return true;
+//    }
+//    return false;
+//}
 
-    string second_module;
-    cin >> second_module;
+void processString(string input) {
+    int n = 1;
+    string argument = SplitUserInput(n, input);
 
-    connectModules(first_module, second_module);
+    while (!argument.empty()) {
+        processArgument(argument);
+        n++;
+        argument = SplitUserInput(n, input);
+    }
+    //If modules are not empty then process them with an empty string
+    /*while (modulesNotEmpty())
+        processArgument("");*/
 }
-
 
 void interactive_command()
 {
-    char test[200]; 
-    char test2[200];
-    char test3[200];
-    string command, argument1, argument2, argument3, argument4; // command expects an input like module, connect, process and exit, argumets1-4 expect strings and names or modules.
+    string command, input, argument1, argument2, argument3, argument4; // command expects an input like module, connect, process and exit, argumets1-4 expect strings and names or modules.
+
+    cout << "Hello! Please write the command: \n";
+
+    //At the start of the program write all connections with -1, later used to index them.
+	for (int x = 0; x < 100; x++) {
+		for (int y = 0; y < 100; y++) {
+			connections[x][y] = -1;
+		}
+	}
 
     do
     {
+        getline(cin, input);
 
-        // write first module
-        // write second module
-        // write operation
-        // process result
-
-
-        // [module, name, operation] -> matrix of module
-        // [connect, module_name, module_name] -> array of connect
-        // [process, keyword1, keyword2] -> array of process
-
-
-        //char name[256], title[256];
-
-        //cout << "Enter your name: ";
-        //cin.getline(name, 256);
-        //cout << name;
-        //cout << "Enter your favourite movie: ";
-        //cin.getline(title, 256);
-
-        //cout << name << "'s favourite movie is " << title;
-
-        //cin >> command >> argument1 >> argument2;//>>argument3>>argument4; //NEEDED a way to figure reading input till 'ENTER' is pressed
+        command = SplitUserInput(0, input);
         
-        cout << "Hello! Please write the command: \n";
-
-        cin >> command;
-
         if (command == "module") // module <name> <operation>
         {
-            moduleCommandRun();
+            createModule(SplitUserInput(1, input), SplitUserInput(2, input));
         }
         else if (command == "connect")
         {
             //TODO
-            connectCommandRun();
+            connectModules(SplitUserInput(1, input), SplitUserInput(2, input));
         }
         else if (command == "process") // processes commands with given strings.
         {
             //TODO save the inputs
-
+            processString(input);
+        }
+        else if (command == "exit") {
+            modules.clear();
         }
 
     } while (command != "exit");
@@ -156,4 +161,4 @@ int main()
 
 
 //This comes in handy when using reverse() because everycharacter needs to be indexed to an array and then called in reverse.
-//https://stackoverflow.com/questions/3955601/how-do-i-split-a-string-at-an-arbitrary-index
+//https://stackoverflow.com/questions/3955601/how-do-i-split-a-string-at-an-arbitrary-index 
