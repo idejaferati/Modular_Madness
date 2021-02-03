@@ -3,20 +3,30 @@
 #include <vector>
 #include <sstream>
 #include <iterator>
-#include <map>
+#include <queue>
 
 using namespace std; //Namespace std so that std::cout is just cout.
 
 pair<string, string> module;
 vector<pair<string, string>> modules;
+pair<string, string> modulesString;
 vector<string> words;
 vector<pair<string, string>> processedStrings;
+vector<pair<string, string>> connectedModules;
 
-int connections[100][100];
+namespace Operations {
+    enum Type {
+        echo = 1,
+        reverse = 2,
+        delay = 3,
+        noop = 4
+    };
+} typedef Operations::Type Operation;
+
 
 string echo(string word)
 {
-    return word+word;
+    return word + word;
 }
 
 string reverse(string word)
@@ -29,13 +39,17 @@ string reverse(string word)
         swap(reverse_word[i], reverse_word[last]);
         last = last - 1;
     }
-    
-    return "\n"+ reverse_word;
+
+    return reverse_word;
 }
 
 string delay(vector<string> words)
 {
-    return words[words.size()-1];
+    vector<string> tempWords;
+    for (string word : words) {
+        tempWords.push_back(word);
+    }
+    return tempWords[tempWords.size() - 2];
 }
 
 string noop(string word)
@@ -68,71 +82,119 @@ string SplitUserInput(int n, string wholeCommand) {
 }
 
 void connectModules(string first_module, string second_module) {
-    int intA = -1; //index of module with name a in modules array
-    int intB = -1; //index of module with name b in modules array
-    //finding a and b in the modules
-    for (int i = 0; i <= modules.size(); i++) {
-        if (first_module.compare(modules[i].first) == 0)
-            intA = i;
-        if (second_module.compare(modules[i].first) == 0)
-            intB = i;
-        if (intA != -1 && intB != -1)
-            break;
-    }
-    //second index for connections
-    int c = 0;
-    while (connections[intA][c] != -1 && c < 100) {
-        c++;
-    }
-    connections[intA][c] = intB;
-}
-void processArgument(string argument) // processes argument 
-{
-    // TODO process argument
-}
 
-// If modules are not empty then continue to process strings
-//bool modulesNotEmpty() {
-//    for (int i = 0; i < modules.size(); i++) {
-//        if (!modules[i].words.empty())
-//            return true;
-//    }
-//    return false;
-//}
+    pair<string, string> connection;
+    connection.first = first_module;
+    connection.second = second_module;
 
+    connectedModules.push_back(connection);
+
+    //int intA = -1; //index of module with name a in modules array
+    //int intB = -1; //index of module with name b in modules array
+    ////finding a and b in the modules
+    //for (int i = 0; i <= moduless.size(); i++) {
+    //    if (first_module.compare(moduless[i].first) == 0)
+    //        intA = i;
+    //    if (second_module.compare(moduless[i].first) == 0)
+    //        intB = i;
+    //    if (intA != -1 && intB != -1)
+    //        break;
+    //}
+    ////second index for connections
+    //int c = 0;
+    //while (connections[intA][c] != -1 && c < 100) {
+    //    c++;
+    //}
+    //connections[intA][c] = intB;
+
+    //cout << connections;
+}
 void processString(string input) {
-    int n = 1;
-    string argument = SplitUserInput(n, input);
+    string word;                 // Have a buffer string
+    stringstream ss(input);       // Insert the string into a stream
 
-    while (!argument.empty()) {
-        processArgument(argument);
-        n++;
-        argument = SplitUserInput(n, input);
+    vector<string> tokens; // Create vector to hold our words
+
+    vector<pair<string, string>> processingModules = modules;
+
+
+    while (getline(ss, word, ' ')) {
+        if (word != "process") {
+            tokens.push_back(word);
+        }
     }
-    //If modules are not empty then process them with an empty string
-    /*while (modulesNotEmpty())
-        processArgument("");*/
+
+    cout << "\n modules: \n";
+    for (int i = 0; i < tokens.size(); i++) {
+        modulesString.first = processingModules[i].first;
+
+        /*goto*/A:
+        if (processingModules[i].second == "echo") {
+            modulesString.second = echo(tokens[i]);
+            processedStrings.push_back(modulesString);
+        }
+        else if (processingModules[i].second == "reverse") {
+            modulesString.second = reverse(tokens[i]);
+            processedStrings.push_back(modulesString);
+        }
+        else if (processingModules[i].second == "delay") {
+            if (i != 0) {
+                modulesString.second = tokens[i - 1];
+            }
+        }
+        else if (processingModules[i].second == "noop") {
+            modulesString.second = noop(tokens[i]);
+            processedStrings.push_back(modulesString);
+        }
+
+        if (processingModules[i].first == connectedModules[i].first || processingModules[i].first == connectedModules[i].second) {
+            processingModules[i].second = processingModules[i - 1].second;
+            goto A;
+        }
+    }
+
+    cout << "\n added modules: \n";
+    for (pair<string, string> module : modules) {
+        cout << "module: " + module.first + " " + module.second + "\n";
+    }
+
+    cout << "\n processing modules: \n";
+    for (pair<string, string> module : processingModules) {
+        cout << "module: " + module.first + " " + module.second + "\n";
+    }
+
+    cout << "\n connected modules: \n";
+    for (pair<string, string> module : connectedModules) {
+        cout << "module: " + module.first + " " + module.second + "\n";
+    }
+
+    cout << "\n processedStrings: \n";
+    for (pair<string, string> module : processedStrings) {
+        cout << "module: " + module.first + " " + module.second + "\n";
+    }
+
+    cout << "\n Rezultati: \n";
+    for (pair<string, string> module : processedStrings) {
+        cout << module.second+" ";
+    }
 }
 
 void interactive_command()
 {
-    string command, input, argument1, argument2, argument3, argument4; // command expects an input like module, connect, process and exit, argumets1-4 expect strings and names or modules.
+    string command, input; // command expects an input like module, connect, process and exit, argumets1-4 expect strings and names or modules.
 
     cout << "Hello! Please write the command: \n";
+    pair<string, string> initialWord;
+    initialWord.first = "initial";
+    initialWord.second = "hello";
 
-    //At the start of the program write all connections with -1, later used to index them.
-	for (int x = 0; x < 100; x++) {
-		for (int y = 0; y < 100; y++) {
-			connections[x][y] = -1;
-		}
-	}
-
+    processedStrings.push_back(initialWord);
     do
     {
         getline(cin, input);
 
         command = SplitUserInput(0, input);
-        
+
         if (command == "module") // module <name> <operation>
         {
             createModule(SplitUserInput(1, input), SplitUserInput(2, input));
