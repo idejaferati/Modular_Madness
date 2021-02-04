@@ -19,3 +19,13 @@ use of connection:
 ```
 [~]$ g++ modular_madness.cpp
 ```
+
+### Code samples
+
+```
+module name1 reverse
+module name2 delay
+connect name1 name2
+process hello world
+hello olleh dlrow
+```
