@@ -8,7 +8,7 @@ Module operations:
 - delay: The output string is the previous input string. The initial output is “hello”.
 - noop: The input appears unchanged at the output
 
-Module calls from standard input `cin`
+Module calls from standard input
 1. Module definition, adds a new module to the network
 use of module:
 	module \<name_of_the_module\> \<operation\>
