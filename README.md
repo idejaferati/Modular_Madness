@@ -19,5 +19,5 @@ use of connection:
 
 Compiling and running the program
 ```
-[~]$ g++ modular_madness.cpp HeaderFile.cpp
+[~]$ g++ modular_madness.cpp
 ```
