@@ -89,25 +89,6 @@ void connectModules(string first_module, string second_module) {
 
     connectedModules.push_back(connection);
 
-    //int intA = -1; //index of module with name a in modules array
-    //int intB = -1; //index of module with name b in modules array
-    ////finding a and b in the modules
-    //for (int i = 0; i <= moduless.size(); i++) {
-    //    if (first_module.compare(moduless[i].first) == 0)
-    //        intA = i;
-    //    if (second_module.compare(moduless[i].first) == 0)
-    //        intB = i;
-    //    if (intA != -1 && intB != -1)
-    //        break;
-    //}
-    ////second index for connections
-    //int c = 0;
-    //while (connections[intA][c] != -1 && c < 100) {
-    //    c++;
-    //}
-    //connections[intA][c] = intB;
-
-    //cout << connections;
 }
 void processString(string input) {
     string word;                 // Have a buffer string
