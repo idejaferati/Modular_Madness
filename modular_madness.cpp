@@ -180,5 +180,15 @@ void interactive_command()
 
 int main()
 {
+    //Start screen
+    cout << "Modular Madness"
+    cout << "echo : The output string is the input string concatenated to itself." << endl;
+    cout << "reverse : The output string is the input string reversed." << endl;
+    cout << "delay: The output string is the previous input string. The initial output is 'hello'." << endl;
+    cout << "noop: The input appears unchanged at the output" << endl << endl;
+    cout << "module <name> < type>" << endl;
+    cout << "connect <module1> <module2>" << endl;
+    cout << "process <string1> <string2> <string3>" << endl << endl;
+    
     interactive_command(); // Calls interactive_command() with an infinte loop that exits when the given commad is exit.
 }
