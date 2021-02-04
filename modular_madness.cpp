@@ -113,44 +113,49 @@ void processString(string input) {
     string word;                 // Have a buffer string
     stringstream ss(input);       // Insert the string into a stream
 
-    vector<string> tokens; // Create vector to hold our words
+    vector<string> inputWords; // Create vector to hold our words
 
     vector<pair<string, string>> processingModules = modules;
 
-
     while (getline(ss, word, ' ')) {
         if (word != "process") {
-            tokens.push_back(word);
+            inputWords.push_back(word);
         }
     }
 
     cout << "\n modules: \n";
-    for (int i = 0; i < tokens.size(); i++) {
+    for (int i = 0; i < inputWords.size(); i++) {
         modulesString.first = processingModules[i].first;
 
         /*goto*/A:
         if (processingModules[i].second == "echo") {
-            modulesString.second = echo(tokens[i]);
-            processedStrings.push_back(modulesString);
+            modulesString.second = echo(inputWords[i]);
         }
         else if (processingModules[i].second == "reverse") {
-            modulesString.second = reverse(tokens[i]);
-            processedStrings.push_back(modulesString);
+            modulesString.second = reverse(inputWords[i]);
         }
         else if (processingModules[i].second == "delay") {
-            if (i != 0) {
-                modulesString.second = tokens[i - 1];
+            if (i == 0) {
+                modulesString.second = inputWords[0];
+            }
+            else {
+                modulesString.second = inputWords[i - 1];
+                processingModules[i].second = processingModules[i - 1].second;
             }
         }
         else if (processingModules[i].second == "noop") {
-            modulesString.second = noop(tokens[i]);
-            processedStrings.push_back(modulesString);
+            modulesString.second = noop(inputWords[i]);
         }
 
-        if (processingModules[i].first == connectedModules[i].first || processingModules[i].first == connectedModules[i].second) {
-            processingModules[i].second = processingModules[i - 1].second;
-            goto A;
+        //connection
+        for (pair<string, string> conModule : connectedModules)
+        {
+            if (processingModules[i].first == conModule.first) {
+                processingModules[i + 1].second = processingModules[i].second;
+            }
         }
+
+        processedStrings.push_back(modulesString);
     }
 
     cout << "\n added modules: \n";
@@ -175,7 +180,7 @@ void processString(string input) {
 
     cout << "\n Rezultati: \n";
     for (pair<string, string> module : processedStrings) {
-        cout << module.second+" ";
+        cout << module.second + " ";
     }
 }
 
