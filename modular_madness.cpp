@@ -213,12 +213,19 @@ void interactive_command()
     initialWord.first = "initial";
     initialWord.second = "hello";
     processedStrings.push_back(initialWord);
-
-    cout << "Hello! Please write the command: \n";
+    
+    //Start Screen
+    cout << "Modular Madness\n";
     cout << "To add a module: module <module_name> <operation>\n";
     cout << "To do a connection between two modules: connect <first_module_name> <second_module_name>\n";
     cout << "To process the strings(words): process <first_word> <second_word>\n";
-
+    
+    cout << "echo : The output string is the input string concatenated to itself." << endl;
+    cout << "reverse : The output string is the input string reversed." << endl;
+    cout << "delay: The output string is the previous input string. The initial output is 'hello'." << endl;
+    cout << "noop: The input appears unchanged at the output" << endl << endl;
+    
+//     cout << "Hello! Please write the command: \n";
     do
     {
         /*
