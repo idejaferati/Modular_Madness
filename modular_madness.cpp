@@ -2,8 +2,7 @@
 #include <string> // Working with strings
 #include <vector>
 #include <sstream>
-#include <iterator>
-#include <queue>
+
 
 using namespace std; //Namespace std so that std::cout is just cout.
 
@@ -124,56 +123,34 @@ void processString(string input) {
             modulesString.second = noop(inputWords[i]);
         }
 
-        #pragma region Connect
+#pragma region Connect
+        /*
+        *   for every pair of connected modules check if the <first_module> of processing is inside <connectedModules>
+        *   <first_module> <first_word>
+        *   <second_module> <second_word>
+        *   ...
+        */
+        for (pair<string, string> conModule : connectedModules)
+        {
             /*
-            *   for every pair of connected modules check if the <first_module> of processing is inside <connectedModules>
-            *   <first_module> <first_word>
-            *   <second_module> <second_word>
-            *   ...
+            *   if the <first_module> of processingModules is equals to <first_module> of connectedModules
+            *   make the output(.second) of the [i] module to the input of [j] module
             */
-            for (pair<string, string> conModule : connectedModules)
-            {
-                /*
-                *   if the <first_module> of processingModules is equals to <first_module> of connectedModules
-                *   make the output(.second) of the [i] module to the input of [j] module
-                */
-                if (processingModules[i].first == conModule.first) {
-                    for (int j = 0; j < processingModules.size(); j++) {
-                        if (processingModules[j].first == conModule.second) {
-                            processingModules[j].second = processingModules[i].second;
-                        }
+            if (processingModules[i].first == conModule.first) {
+                for (int j = 0; j < processingModules.size(); j++) {
+                    if (processingModules[j].first == conModule.second) {
+                        processingModules[j].second = processingModules[i].second;
                     }
                 }
             }
-
-            processedStrings.push_back(modulesString); //save the changed strings(words) into the vector
-        #pragma endregion
+        }
+        processedStrings.push_back(modulesString); //save the changed strings(words) into the vector
+#pragma endregion
 
     }
 
-    cout << "\n added modules: \n";
-    for (pair<string, string> module : modules) {
-        cout << "module: " + module.first + " " + module.second + "\n";
-    }
-
-    cout << "\n connected modules: \n";
-    for (pair<string, string> module : connectedModules) {
-        cout << "module: " + module.first + " " + module.second + "\n";
-    }
-
-    cout << "\n processing modules: \n";
-    for (pair<string, string> module : processingModules) {
-        cout << "module: " + module.first + " " + module.second + "\n";
-    }
-
-    cout << "\n processedStrings: \n";
     for (pair<string, string> module : processedStrings) {
-        cout << "module: " + module.first + " " + module.second + "\n";
-    }
-
-    cout << "\n Result: \n";
-    for (pair<string, string> module : processedStrings) {
-        cout << module.second + " ";
+        cout << module.second + " " << endl;
     }
 }
 
@@ -213,19 +190,17 @@ void interactive_command()
     initialWord.first = "initial";
     initialWord.second = "hello";
     processedStrings.push_back(initialWord);
-    
+
     //Start Screen
-    cout << "Modular Madness\n";
+    cout << "Modular Madness" << endl << endl;
     cout << "To add a module: module <module_name> <operation>\n";
     cout << "To do a connection between two modules: connect <first_module_name> <second_module_name>\n";
     cout << "To process the strings(words): process <first_word> <second_word>\n";
-    
     cout << "echo : The output string is the input string concatenated to itself." << endl;
     cout << "reverse : The output string is the input string reversed." << endl;
     cout << "delay: The output string is the previous input string. The initial output is 'hello'." << endl;
     cout << "noop: The input appears unchanged at the output" << endl << endl;
-    
-//     cout << "Hello! Please write the command: \n";
+
     do
     {
         /*
@@ -238,28 +213,23 @@ void interactive_command()
         *   <SplitUserInput> method gets the user input and returns the command.
         *   <command> variable that holds command from user input
         */
+
         command = SplitUserInput(0, input);
 
-        if (command == "module") // module <name> <operation>
-        {
+        if (command == "module") { // module <name> <operation
             createModule(SplitUserInput(1, input), SplitUserInput(2, input));
         }
-        else if (command == "connect") // connect <first_module_name> <second_module_name>
-        {
+        else if (command == "connect") { // connect <first_module_name> <second_module_name
             connectModules(SplitUserInput(1, input), SplitUserInput(2, input));
         }
-        else if (command == "process") // processes commands with given strings.
-        {
+        else if (command == "process") { // processes commands with given strings
             processString(input);
         }
-        else if (command == "exit") {
+        else if (command == "exit")
             modules.clear();
-        }
-
     } while (command != "exit");
 }
 
-int main()
-{
+int main(){
     interactive_command(); // Calls interactive_command() with an infinte loop that exits when the given commad is exit.
 }
