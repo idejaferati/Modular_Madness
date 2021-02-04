@@ -104,7 +104,6 @@ void processString(string input) {
         }
     }
 
-    cout << "\n modules: \n";
     for (int i = 0; i < inputWords.size(); i++) {
         modulesString.first = processingModules[i].first;
 
@@ -139,27 +138,6 @@ void processString(string input) {
         processedStrings.push_back(modulesString);
     }
 
-    cout << "\n added modules: \n";
-    for (pair<string, string> module : modules) {
-        cout << "module: " + module.first + " " + module.second + "\n";
-    }
-
-    cout << "\n processing modules: \n";
-    for (pair<string, string> module : processingModules) {
-        cout << "module: " + module.first + " " + module.second + "\n";
-    }
-
-    cout << "\n connected modules: \n";
-    for (pair<string, string> module : connectedModules) {
-        cout << "module: " + module.first + " " + module.second + "\n";
-    }
-
-    cout << "\n processedStrings: \n";
-    for (pair<string, string> module : processedStrings) {
-        cout << "module: " + module.first + " " + module.second + "\n";
-    }
-
-    cout << "\n Rezultati: \n";
     for (pair<string, string> module : processedStrings) {
         cout << module.second + " ";
     }
@@ -168,8 +146,6 @@ void processString(string input) {
 void interactive_command()
 {
     string command, input; // command expects an input like module, connect, process and exit, argumets1-4 expect strings and names or modules.
-
-    cout << "Hello! Please write the command: \n";
     pair<string, string> initialWord;
     initialWord.first = "initial";
     initialWord.second = "hello";
@@ -206,7 +182,3 @@ int main()
 {
     interactive_command(); // Calls interactive_command() with an infinte loop that exits when the given commad is exit.
 }
-
-
-//This comes in handy when using reverse() because everycharacter needs to be indexed to an array and then called in reverse.
-//https://stackoverflow.com/questions/3955601/how-do-i-split-a-string-at-an-arbitrary-index 
