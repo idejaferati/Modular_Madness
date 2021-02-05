@@ -25,5 +25,5 @@ or
 ```
 ### Executing code video
 ```
-[a link](https://drive.google.com/file/d/1S4MgsDi9ClgpnDcjGSn1zDR3RZis1XWE/view?usp=sharing)
+[Video link here](https://drive.google.com/file/d/1S4MgsDi9ClgpnDcjGSn1zDR3RZis1XWE/view?usp=sharing)
 ```
